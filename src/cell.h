@@ -1,10 +1,11 @@
 
 
-#pragma once
+#ifndef CELL_H
+#define CELL_H
 
 #include "state.h"
-#include "lattice.h"
-
+//#include "lattice.h"
+class Lattice;
 class Cell {
  public:
   Cell(State state, int position) : state_(state), position_(position) {}
@@ -14,6 +15,7 @@ class Cell {
   void setPosition(int position) { position_ = position; }
 
   void nextState(const Lattice& lattice);
+
   void updateState();
 
  private:
@@ -21,3 +23,5 @@ class Cell {
   int position_;
   State nextState_;
 };
+
+#endif  // CELL_H

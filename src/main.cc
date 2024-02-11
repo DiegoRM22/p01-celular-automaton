@@ -2,6 +2,7 @@
 #include <iostream>
 
 #include "lattice.h"
+#include "cell.h"
 
 
 std::string getArgs(int argc, char** argv) {
@@ -31,19 +32,35 @@ void setArguments(std::string args, int& size, std::string& border) {
       }
     }
   }
+  // Eliminar el b= del string border
+  border = border.substr(2, border.size());
+}
+
+std::vector<Cell> createCellsArray(std::string cells) {
+  std::vector<Cell> cellsArray;
+  for (int i = 0; i < cells.size(); i++) {
+    if (cells[i] == '0') {
+      cellsArray.push_back(Cell(State(), i));
+    } else {
+      cellsArray.push_back(Cell(State(1, cells[i]), i));
+    }
+  }
+  return cellsArray;
 }
 
 int main(int argc, char** argv) {
   // Get all the arguments
   std::string args = getArgs(argc, argv);
   std::cout << "Hello, " << args << "!" << std::endl;
-  int size = 0;
+  int size = 4;
   std::string border = "";
   setArguments(args, size, border);
   std::cout << "Size: " << size << std::endl;
   std::cout << "Border: " << border << std::endl;
-
-  Lattice lattice(size, border, "0110");
+  std::vector<Cell> cells = createCellsArray("0110");
+  Lattice lattice(size, border, cells);
+  //std::cout << lattice << std::endl;
+  lattice.nextGeneration();
 
 
   return 0;

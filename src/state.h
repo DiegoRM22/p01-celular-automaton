@@ -1,6 +1,9 @@
 
 #pragma once
 
+/**
+ * @brief State class. Represents the state of a cell, with a value and a symbol.
+*/
 class State {
  public:
   State() : value_(0), symbol_(' ') {}

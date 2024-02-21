@@ -9,8 +9,7 @@ Lattice::Lattice(int size, std::string border, std::vector<Cell> cells) {
   border_ = border;
   // Usar memoria dinámica para crear las células.
   for (int i = 0; i < cells.size(); i++) {
-    State state = cells[i].getState();
-    Cell* cell = new Cell(state, i);
+    Cell* cell = new Cell(State(cells[i].getState().getValue(), cells[i].getState().getSymbol()), i);
     cells_.push_back(cell);
   }
 }
@@ -44,12 +43,12 @@ Lattice::~Lattice() {
 }
 
 int Lattice::getSize() const {
-  return size_;
+  return cells_.size();
 }
 
 std::ostream& operator<<(std::ostream& os, const Lattice& lattice) {
   for (int i = 0; i < lattice.getSize(); i++) {
-    os << lattice.getCell(i).getState().getSymbol();
+    os << lattice.getCell(i);
   }
   return os;
 }

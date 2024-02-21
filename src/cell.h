@@ -24,4 +24,6 @@ class Cell {
   State nextState_;
 };
 
+std::ostream& operator<<(std::ostream& os, const Cell& cell);
+
 #endif  // CELL_H

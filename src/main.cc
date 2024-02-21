@@ -40,9 +40,9 @@ std::vector<Cell> createCellsArray(std::string cells) {
   std::vector<Cell> cellsArray;
   for (int i = 0; i < cells.size(); i++) {
     if (cells[i] == '0') {
-      cellsArray.push_back(Cell(State(), i));
+      cellsArray.push_back(Cell(State(0, '_'), i));
     } else {
-      cellsArray.push_back(Cell(State(1, cells[i]), i));
+      cellsArray.push_back(Cell(State(1, 'X'), i));
     }
   }
   return cellsArray;
@@ -57,10 +57,25 @@ int main(int argc, char** argv) {
   setArguments(args, size, border);
   std::cout << "Size: " << size << std::endl;
   std::cout << "Border: " << border << std::endl;
-  std::vector<Cell> cells = createCellsArray("0110");
+  std::vector<Cell> cells = createCellsArray("011011010001");
+  std::cout << "Cells: \n";
   Lattice lattice(size, border, cells);
+  std::cout << lattice << std::endl;
+  for (int i = 0; i < cells.size(); i++) {
+    cells[i].nextState(lattice);
+  }
+  for (int i = 0; i < cells.size(); i++) {
+    cells[i].updateState();
+  }
+  std::cout << std::endl;
+
+  for (int i = 0; i < cells.size(); i++) {
+    std::cout << cells[i];
+  }
+  std::cout << std::endl;
+  
   //std::cout << lattice << std::endl;
-  lattice.nextGeneration();
+  //lattice.nextGeneration();
 
 
   return 0;

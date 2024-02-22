@@ -26,6 +26,22 @@ Lattice::Lattice(int size, std::string border, std::vector<Cell> cells, const in
 }
 
 /**
+ * @brief Copy constructor of the lattice.
+ * @param lattice Lattice to copy.
+ * @return Lattice.
+ *
+*/
+Lattice::Lattice(const Lattice& lattice) {
+  size_ = lattice.getSize();
+  border_ = lattice.getBorder();
+  openBorderValue_ = lattice.getOpenBorderValue();
+  for (int i = 0; i < lattice.getCells().size(); i++) {
+    Cell* cell = new Cell(State(lattice.getCell(i).getState().getValue(), lattice.getCell(i).getState().getSymbol()), i);
+    cells_.push_back(cell);
+  }
+}
+
+/**
  * @brief Constructor of the lattice.
  * @param size Size of the lattice.
  * @param border Border of the lattice.

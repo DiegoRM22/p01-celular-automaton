@@ -4,6 +4,7 @@
 
 #include "lattice.h"
 #include "cell.h"
+#include "celular-automaton.h"
 
 
 /**
@@ -108,17 +109,18 @@ int main(int argc, char** argv) {
   std::cout << "Cells: \n";
   // Mientras se pulse una letra que no sea q, se seguirá ejecutando el programa.
   Lattice lattice(size, border, fileName, openBorderValue);
-  std::cout << "Press q to quit the program. Any other character to continue. \n";
-  std::cout << lattice;
-  char option;
-  while (true) {
-    std::cin.get(option);
-    if (option == 'q') {
-      break;
-    }
-    lattice.nextGeneration();
-    std::cout << lattice;
-  }
+  CelularAutomaton automaton(lattice);
+  
+
+  automaton.transition();
+  // while (true) {
+  //   std::cin.get(option);
+  //   if (option == 'q') {
+  //     break;
+  //   }
+  //   lattice.nextGeneration();
+  //   std::cout << lattice;
+  // }
 
   std::cout << std::endl;
 

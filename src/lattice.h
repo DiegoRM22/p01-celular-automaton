@@ -13,13 +13,16 @@ class Lattice {
  public:
   Lattice(int size, std::string border, std::vector<Cell> cells, const int openBorderValue);
   Lattice(int size, std::string border, const std::string& fileName, const int openBorderValue = 0);
+  Lattice(const Lattice& lattice);  // NOLINT(runtime/references
   ~Lattice();
   Cell getCell(int position) const;
   std::string getBorder() const { return border_;}
   void setCell(Cell cell, int position);
   int getSize() const;
-  void nextGeneration();
   int getOpenBorderValue() const { return openBorderValue_; }
+  std::vector<Cell*> getCells() const { return cells_; }
+  
+  void nextGeneration();
 
   void addFirstCell(const Cell& cell);
  private:

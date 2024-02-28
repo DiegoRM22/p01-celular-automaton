@@ -10,25 +10,57 @@
 */
 void Cell::nextState(const Lattice& lattice) {
   int aliveNeighbors = 0;
+  // Frontera reflectora.Si sale del limite, se refleja.
+  aliveNeighbors = aliveNeighborsReflective(lattice);
+  std::cout << "Alive neighbors: " << aliveNeighbors << std::endl;
+
+  // for (int i = -1; i < 2; i++) {
+  //   for (int j = -1; j < 2; j++) {
+  //     int auxI = position_.getXCoordinate() + i;
+  //     int auxJ = position_.getYCoordinate() + j;
+  //     if (auxI < 0) { 
+  //       auxI = (lattice.getRowSize() + i);
+  //     } else if (auxI >= lattice.getRowSize()) {
+  //       auxI = (auxI - lattice.getRowSize());
+  //     }
+  //     if (auxJ < 0) { 
+  //       auxJ = (lattice.getColumnSize() + j);
+  //     } else if (auxJ >= lattice.getColumnSize()) {
+  //       auxJ = (auxJ - lattice.getColumnSize());
+  //     }
+  //     std::cout << "Position: " << auxI << " " << auxJ << std::endl;
+  //   }
+  // }
+}
+
+/**
+ * @brief Calculates the number of alive neighbors of the cell with reflective border.
+ * @param lattice Lattice to get the neighbors.
+ * @return int.
+*/
+int Cell::aliveNeighborsReflective(const Lattice& lattice) {
+  int aliveNeighbors = 0;
   for (int i = -1; i < 2; i++) {
     for (int j = -1; j < 2; j++) {
+      if (i == 0 && j == 0) {
+        continue;
+      }
       int auxI = position_.getXCoordinate() + i;
       int auxJ = position_.getYCoordinate() + j;
-      if (auxI < 0) { 
-        auxI = (lattice.getRowSize() + i);
-      } else if (auxI >= lattice.getRowSize()) {
-        auxI = (auxI - lattice.getRowSize());
+      if (auxI < 0 || auxI >= lattice.getRowSize()) { 
+        auxI = position_.getXCoordinate();
       }
-      if (auxJ < 0) { 
-        auxJ = (lattice.getColumnSize() + j);
-      } else if (auxJ >= lattice.getColumnSize()) {
-        auxJ = (auxJ - lattice.getColumnSize());
+      if (auxJ < 0 || auxJ >= lattice.getColumnSize()) { 
+        auxJ = position_.getYCoordinate();
       }
-      std::cout << "Position: " << auxI << " " << auxJ << std::endl;
+      Position auxPosition(auxI, auxJ);
+      if (lattice[auxPosition].getState().getSymbol() == 'X') {
+        aliveNeighbors++;
+      }
     }
   }
+  return aliveNeighbors;
 }
-    
 
 
 /**

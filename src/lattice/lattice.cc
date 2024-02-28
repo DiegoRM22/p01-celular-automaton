@@ -150,6 +150,10 @@ void Lattice::nextGeneration() {
   }
 }
 
+Cell& Lattice::operator[](const Position& position) const {
+  return *cells_[position.getXCoordinate()][position.getYCoordinate()];
+}
+
 /**
  * @brief Add the first cell to the lattice.
  * @param cell Cell to add.

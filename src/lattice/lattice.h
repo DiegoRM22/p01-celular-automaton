@@ -25,6 +25,9 @@ class Lattice {
   void resizeCells(int rowSize, int columnSize) { cells_.resize(rowSize, std::vector<Cell*>(columnSize)); }
   // int getOpenBorderValue() const { return openBorderValue_; }
   // std::vector<Cell*> getCells() const { return cells_; }
+
+  Cell& operator[](const Position& position) const;
+
   
   void nextGeneration();
 
@@ -37,5 +40,6 @@ class Lattice {
 };
 
 std::ostream& operator<<(std::ostream& os, const Lattice& lattice);
+
 
 #endif  // LATTICE_H

@@ -18,7 +18,7 @@ class Lattice {
   // Lattice(const Lattice& lattice);  // NOLINT(runtime/references
   ~Lattice();
   Cell getCell(Position position) const;
-  // std::string getBorder() const { return border_;}
+  std::string getBorder() const { return border_;}
   void setCell(Cell cell, Position position);
   //int getSize() const;
   int getRowSize() const { return cells_.size(); }

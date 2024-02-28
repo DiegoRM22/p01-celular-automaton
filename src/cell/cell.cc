@@ -11,8 +11,11 @@
 void Cell::nextState(const Lattice& lattice) {
   int aliveNeighbors = 0;
   // Frontera reflectora.Si sale del limite, se refleja.
-  aliveNeighbors = aliveNeighborsNoBorder(lattice);
-  
+  if (lattice.getBorder() == "reflective") {
+    aliveNeighbors = aliveNeighborsReflective(lattice);
+  } else if (lattice.getBorder() == "noborder") {
+    aliveNeighbors = aliveNeighborsNoBorder(lattice);
+  }  
   // 23/3 rule
   // Una célula en estado «viva» con 2 ó 3 células vecinas en estado «viva» continúa
   //en estado «viva» en la siguiente generación. En otro caso pasa al estado «muerta».

@@ -110,7 +110,8 @@ int main(int argc, char** argv) {
   // Mientras se pulse una letra que no sea q, se seguirá ejecutando el programa.
   Lattice lattice(size, border, fileName, openBorderValue);
   std::cout << lattice << std::endl;
-  lattice.nextGeneration();  
+  lattice.nextGeneration();
+  std::cout << lattice << std::endl;
 
   return 0;
 }

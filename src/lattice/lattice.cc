@@ -141,11 +141,14 @@ std::ostream& operator<<(std::ostream& os, const Lattice& lattice) {
  * @brief Calculates the next generation of the lattice.
 */
 void Lattice::nextGeneration() {
-  std::cout << "Next generation" << std::endl;
   for (int i = 0; i < getRowSize(); i++) {
     for (int j = 0; j < getColumnSize(); j++) {
-      std::cout << "Next state of cell: " << i << " " << j << std::endl;
       cells_[i][j]->nextState(*this);
+    }
+  }
+  for (int i = 0; i < getRowSize(); i++) {
+    for (int j = 0; j < getColumnSize(); j++) {
+      cells_[i][j]->updateState();
     }
   }
 }

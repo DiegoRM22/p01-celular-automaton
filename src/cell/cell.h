@@ -17,7 +17,8 @@ class Cell {
   void setPosition(Position position) { position_ = position; }
   void nextState(const Lattice& lattice);
   int aliveNeighborsReflective(const Lattice& lattice);
-  // void updateState();
+  int aliveNeighborsNoBorder(const Lattice& lattice);
+  void updateState();
 
  private:
   State state_;

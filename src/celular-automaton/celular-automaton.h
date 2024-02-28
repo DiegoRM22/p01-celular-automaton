@@ -4,7 +4,7 @@
 #ifndef CELULAR_AUTOMATON_H
 #define CELULAR_AUTOMATON_H
 
-#include "lattice.h"
+#include "../lattice/lattice.h"
 
 class CelularAutomaton {
  public:

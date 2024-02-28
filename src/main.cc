@@ -2,9 +2,9 @@
 #include <iostream>
 #include <fstream>
 
-#include "lattice.h"
-#include "cell.h"
-#include "celular-automaton.h"
+#include "lattice/lattice.h"
+#include "cell/cell.h"
+#include "celular-automaton/celular-automaton.h"
 
 
 /**
@@ -78,17 +78,17 @@ void setArguments(std::string args, int& size, std::string& border, std::string&
  * @param cells String with the cells.
  * @return std::vector<Cell> Vector of cells.
 */
-std::vector<Cell> createCellsArray(std::string cells) {
-  std::vector<Cell> cellsArray;
-  for (int i = 0; i < cells.size(); i++) {
-    if (cells[i] == '0') {
-      cellsArray.push_back(Cell(State(0, '_'), i));
-    } else {
-      cellsArray.push_back(Cell(State(1, 'X'), i));
-    }
-  }
-  return cellsArray;
-}
+// std::vector<Cell> createCellsArray(std::string cells) {
+//   std::vector<Cell> cellsArray;
+//   for (int i = 0; i < cells.size(); i++) {
+//     if (cells[i] == '0') {
+//       cellsArray.push_back(Cell(State(0, '_'), i));
+//     } else {
+//       cellsArray.push_back(Cell(State(1, 'X'), i));
+//     }
+//   }
+//   return cellsArray;
+// }
 
 /**
  * @brief Main function.
@@ -109,20 +109,8 @@ int main(int argc, char** argv) {
   std::cout << "Cells: \n";
   // Mientras se pulse una letra que no sea q, se seguirá ejecutando el programa.
   Lattice lattice(size, border, fileName, openBorderValue);
-  CelularAutomaton automaton(lattice);
-  
-
-  automaton.transition();
-  // while (true) {
-  //   std::cin.get(option);
-  //   if (option == 'q') {
-  //     break;
-  //   }
-  //   lattice.nextGeneration();
-  //   std::cout << lattice;
-  // }
-
-  std::cout << std::endl;
+  std::cout << lattice << std::endl;
+  lattice.nextGeneration();  
 
   return 0;
 }

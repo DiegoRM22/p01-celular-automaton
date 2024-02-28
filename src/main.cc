@@ -32,19 +32,32 @@ std::string getArgs(int argc, char** argv) {
  * @param fileName Name of the file to read the initial state of the lattice.
  * @param openBorderValue Value of the open border.
 */
-void setArguments(std::string args, int& size, std::string& border, std::string& fileName, int& openBorderValue) {
+void setArguments(std::string args, int& rows, int& cols, std::string& border, std::string& fileName, int& openBorderValue) {
   // ./automaton -size 12 -border =periodic
-  size = 0;
+  rows = 0;
+  cols = 0;
+  std::string auxRows = "";
+  std::string auxCols = "";
   border = "";
   for (int i = 0; i < args.size(); i++) {
     if (args[i] == '-' && args[i + 1] == 's') {
+      std::cout << "Resizing... \n" << args[i + 6] << std::endl;
       // El size debe ser desde i + 7 hasta el siguiente espacio
+      // El numero de columnas va desde args[i + 6] hasta el siguiente espacio
       for (int j = i + 6; j < args.size(); j++) {
         if (args[j] == ' ') {
           break;
         }
-        size = size * 10 + (args[j] - '0');
+        auxRows += args[j];
       }
+      for (int j = i + 6 + auxRows.size() + 1; j < args.size(); j++) {
+        if (args[j] == ' ') {
+          break;
+        }
+        auxCols += args[j];
+      }
+      rows = std::stoi(auxRows);
+      cols = std::stoi(auxCols);
     }
     if (args[i] == '-' && args[i + 1] == 'b') {
       for (int j = i + 8; j < args.size(); j++) {
@@ -74,23 +87,6 @@ void setArguments(std::string args, int& size, std::string& border, std::string&
 }
 
 /**
- * @brief Create a vector of cells from a string.
- * @param cells String with the cells.
- * @return std::vector<Cell> Vector of cells.
-*/
-// std::vector<Cell> createCellsArray(std::string cells) {
-//   std::vector<Cell> cellsArray;
-//   for (int i = 0; i < cells.size(); i++) {
-//     if (cells[i] == '0') {
-//       cellsArray.push_back(Cell(State(0, '_'), i));
-//     } else {
-//       cellsArray.push_back(Cell(State(1, 'X'), i));
-//     }
-//   }
-//   return cellsArray;
-// }
-
-/**
  * @brief Main function.
  * @param argc Number of arguments.
  * @param argv Array of arguments.
@@ -103,15 +99,33 @@ int main(int argc, char** argv) {
   std::string border = "";
   std::string fileName = "";
   int openBorderValue = 0;
-  setArguments(args, size, border, fileName, openBorderValue);
-
+  int rows = 0;
+  int cols = 0;
+  setArguments(args, rows, cols, border, fileName, openBorderValue);
+  std::cout << "Size: " << rows << " * " << cols << " Border: " << border << " File: " << fileName << " Open border value: " << openBorderValue << std::endl;
   std::string fileContent = "";
   std::cout << "Cells: \n";
   // Mientras se pulse una letra que no sea q, se seguirá ejecutando el programa.
-  Lattice lattice(size, border, fileName, openBorderValue);
-  std::cout << lattice << std::endl;
-  lattice.nextGeneration();
-  std::cout << lattice << std::endl;
+  if (fileName != "")  {
+    Lattice lattice(size, border, fileName, openBorderValue);
+    CelularAutomaton automaton(lattice);
+    automaton.transition();
+    delete &lattice;
+  } else {
+    Lattice lattice(rows, cols, border);
+    CelularAutomaton automaton(lattice);
+    automaton.transition();
+    delete &lattice;
+  }
+  
+  // CelularAutomaton automaton(lattice);
+  // automaton.transition();
+  // delete &lattice;
+  // std::cout << lattice << std::endl;
+  // lattice.nextGeneration();
+  // std::cout << lattice << std::endl;
+  
+
 
   return 0;
 }

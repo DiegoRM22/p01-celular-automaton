@@ -14,6 +14,7 @@ class Lattice {
  public:
   //Lattice(int size, std::string border, std::vector<Cell> cells, const int openBorderValue);
   Lattice(int size, std::string border, const std::string& fileName, const int openBorderValue = 0);
+  Lattice(const int rows, const int cols, const std::string border);
   // Lattice(const Lattice& lattice);  // NOLINT(runtime/references
   ~Lattice();
   Cell getCell(Position position) const;
@@ -23,6 +24,11 @@ class Lattice {
   int getRowSize() const { return cells_.size(); }
   int getColumnSize() const { return cells_[0].size(); }
   void resizeCells(int rowSize, int columnSize) { cells_.resize(rowSize, std::vector<Cell*>(columnSize)); }
+  void resizeBorder();
+  void resizingCells();
+  void addBorders(int borders[4]);
+
+  size_t population() const;
   // int getOpenBorderValue() const { return openBorderValue_; }
   // std::vector<Cell*> getCells() const { return cells_; }
 

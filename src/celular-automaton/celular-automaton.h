@@ -11,6 +11,9 @@ class CelularAutomaton {
   CelularAutomaton(const Lattice& lattice) : lattice_(lattice) {}
   Lattice getLattice() const { return lattice_; }
   void transition();
+  void printMenu();
+  void executeOption(char option, bool& showOnlyPopulation);
+  void saveToFile();
  private:
   Lattice lattice_;
 
